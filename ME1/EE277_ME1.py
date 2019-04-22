@@ -15,6 +15,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import csv
 
 def init_symbol_freq_dict():
     print('Initializing symbol frequency dictionary...')
@@ -67,7 +68,14 @@ def get_symbol_freq(input_filename, output_filename=None):
 
     return freq_dict
 
+def write_dict_to_file(dict, output_filename):
+    with open(output_filename, 'w') as f:
+        for key in dict:
+            f.write('%s,%s\n' % (key, dict[key]) )
+
 '''
+    METHOD NAME: get_huffman_codes
+    DESCRIPTION: 
     INPUT: symbol_proba_dict should be a dictionary with the symbols as key and symbol probabilities as values
     
 '''
@@ -119,6 +127,17 @@ def get_huffman_codes(symbol_proba_dict, output_code_dict=None):
     return output_code_dict
 
 
+def compute_ave_codeword_len(symbol_proba_dict, symbol_code_dict):
+    ave_codeword_len = 0
+
+    for symbol in symbol_proba_dict:
+        ave_codeword_len = symbol_proba_dict[symbol]*len(symbol_code_dict[symbol])
+
+    print('Average codeword length is: ', ave_codeword_len)
+    return ave_codeword_len
+
+
+def 
 
 if __name__ == '__main__':
     input_sequence_filename = 'EE277_ME1_file2compress.txt'
@@ -127,6 +146,14 @@ if __name__ == '__main__':
     print('\n\n\n1. Getting symbol probabilities...')
     symbol_freq = get_symbol_freq(input_sequence_filename)#, output_freqgraph_filename)
 
+    output_codeword_file = 'EE277_ME1_codewordassignment.csv'
     print('\n\n\n2. Getting Huffman codes...')
-    get_huffman_codes(symbol_freq)
+    symbol_codes = get_huffman_codes(symbol_freq)
+    write_dict_to_file(symbol_codes, output_codeword_file)
+    ave_codeword_len = compute_ave_codeword_len(symbol_freq, symbol_codes)
+
+
+    print('\n\n\n3. ')
+
+
 
